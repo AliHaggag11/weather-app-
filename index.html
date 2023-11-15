@@ -14,7 +14,7 @@
 <body>
     <div class="card">
         <div class="search">
-            <input type="text" placeholder="Enter city name" spellcheck="false">
+            <input type="text" id="cityInput" placeholder="Enter city name" spellcheck="false">
             <button><img src="/images/search.png"></button>
         </div>
         <div class="error">
@@ -47,7 +47,7 @@
         const apiKey = "feac42cd8e22e437abd8f41a9fdd2d67";
         const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
 
-        const searchBox = document.querySelector(".search input");
+        const cityInput = document.getElementById("cityInput");
         const searchBtn = document.querySelector(".search button");
         const weatherIcon = document.querySelector(".weather-icon");
 
@@ -81,8 +81,15 @@
             }
         }
 
+        cityInput.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+                event.preventDefault(); // Prevent form submission
+                getWeather(cityInput.value);
+            }
+        });
+
         searchBtn.addEventListener("click", () => {
-            getWeather(searchBox.value);
+            getWeather(cityInput.value);
         });
 
         getWeather();
